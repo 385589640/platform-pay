@@ -1,0 +1,22 @@
+spring:
+  application:
+    port: 8080
+  #数据源配置
+  datasource:
+    url: jdbc:mysql://rm-2ze2m50l25g36x6gyqo.mysql.rds.aliyuncs.com:3306/pigxx_act?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC&nullCatalogMeansCurrent=true
+    driver-class-name: com.mysql.jdbc.Driver
+    username: zmsjroot
+    password: ZMSJDB@2020
+    type: com.alibaba.druid.pool.DruidDataSource
+#    hikari:
+#      minimum-idle: 5
+#      maximum-pool-size: 20
+#     connection-test-query: SELECT 1
+# activiti:
+#    database-schema-update: true
+#    # 开启历史库
+#    db-history-used: true
+#    history-level: audit
+mybatis:
+   configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
