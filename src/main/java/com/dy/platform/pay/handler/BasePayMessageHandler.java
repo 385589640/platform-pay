@@ -6,13 +6,13 @@ import com.egzosn.pay.common.bean.PayMessage;
 
 public abstract class BasePayMessageHandler<M extends PayMessage, S extends PayService> implements PayMessageHandler<M, S> {
     //支付账户id
-    private Integer payId;
-
-    public BasePayMessageHandler(Integer payId) {
-        this.payId = payId;
-    }
-
-    public Integer getPayId() {
-        return payId;
-    }
+//    private Integer payId;
+//
+//    public BasePayMessageHandler(Integer payId) {
+//        this.payId = payId;
+//    }
+//
+//    public Integer getPayId() {
+//        return payId;
+//    }
 }

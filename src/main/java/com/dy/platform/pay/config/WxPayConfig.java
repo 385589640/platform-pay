@@ -25,6 +25,7 @@ public class WxPayConfig {
     private AutowireCapableBeanFactory spring;
     
     private static String KEYSTORE = "/1601009655_20200821_cert/apiclient_cert.p12";
+//    private static String KEYSTORE = "F:\\cert/apiclient_cert.p12";
     private static String STORE_PASSWORD = "1601009655";
 
 	@PostConstruct
@@ -40,7 +41,7 @@ public class WxPayConfig {
 //		wxPayConfigStorage.setReturnUrl(wxPayBean.getReturnUrl());//同步回调地址
 		wxPayConfigStorage.setSignType(wxPayBean.getSignType());// 签名方式
 		wxPayConfigStorage.setInputCharset(wxPayBean.getInputCharset());
-		wxPayConfigStorage.setTest(true);//是否为测试账号，沙箱环境
+//		wxPayConfigStorage.setTest(true);//是否为测试账号，沙箱环境
 		WxPayService wxPayService = new WxPayService(wxPayConfigStorage);
 		wxPayService.setRequestTemplateConfigStorage(httpConfigStorageInit());
 		
