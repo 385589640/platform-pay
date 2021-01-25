@@ -12,4 +12,6 @@ public interface WxPayInfoService {
 
 	byte[] toWxQrPay(BigDecimal price) throws IOException;
 
+	String getWxQrPay(BigDecimal price);
+
 }

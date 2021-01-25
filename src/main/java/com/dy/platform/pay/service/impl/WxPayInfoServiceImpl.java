@@ -44,4 +44,11 @@ public class WxPayInfoServiceImpl implements WxPayInfoService {
 		return baos.toByteArray();
 	}
 
+	@Override
+	public String getWxQrPay(BigDecimal price) {
+		PayOrder order = new PayOrder("订单title", "摘要", null == price ? BigDecimal.valueOf(0.01) : price,
+				System.currentTimeMillis() + "", WxTransactionType.NATIVE);
+		return wxPayService.getQrPay(order);
+	}
+
 }

@@ -43,6 +43,18 @@ public class WxPayController {
 		return wxPayInfoService.toWxQrPay(price);
 	}
 	
+	/**
+	 * 获取二维码图像 二维码支付
+	 * 
+	 * @param price 金额
+	 * @return 二维码图像
+	 * @throws IOException IOException
+	 */
+	@RequestMapping(value = "getWxQrPay", produces = "image/jpeg;charset=UTF-8")
+	public String getWxQrPay(BigDecimal price) throws IOException {
+		return wxPayInfoService.getWxQrPay(price);
+	}
+	
 	@GetMapping("test")
 	public String test() {
 		return "test";

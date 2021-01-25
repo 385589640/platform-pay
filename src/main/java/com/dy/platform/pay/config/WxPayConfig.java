@@ -24,8 +24,8 @@ public class WxPayConfig {
 	@Resource
     private AutowireCapableBeanFactory spring;
     
-    private static String KEYSTORE = "/1601009655_20200821_cert/apiclient_cert.p12";
-//    private static String KEYSTORE = "F:\\cert/apiclient_cert.p12";
+//    private static String KEYSTORE = "/1601009655_20200821_cert/apiclient_cert.p12";
+	private static String KEYSTORE = "F:\\cert/apiclient_cert.p12";
     private static String STORE_PASSWORD = "1601009655";
 
 	@PostConstruct
