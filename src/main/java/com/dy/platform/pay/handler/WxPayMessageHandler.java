@@ -20,22 +20,23 @@ import com.egzosn.pay.wx.bean.WxPayMessage;
 public class WxPayMessageHandler extends BasePayMessageHandler<WxPayMessage, PayService> {
 	Logger logger = LoggerFactory.getLogger(WxPayMessageHandler.class);
 
-    @Override
-    public PayOutMessage handle(WxPayMessage payMessage, Map<String, Object> context, PayService payService) throws PayErrorException {
-    	logger.info("---------------------->回调成功-start");
-    	if(null != payMessage)
-    		logger.info("payMessage------" + JSON.toJSONString(payMessage));
-    	if(null != payMessage.getPayMessage())
-    		logger.info("payMessage.getPayMessage()------" + JSON.toJSONString(payMessage.getPayMessage()));
-    	if(null != context)
-    		logger.info("context------" + JSON.toJSONString(context));
-        //交易状态
-        if ("SUCCESS".equals(payMessage.getPayMessage().get("result_code"))){
-            /////这里进行成功的处理
-        	logger.info("---------------------->回调成功-SUCCESS");
-            return  payService.getPayOutMessage("SUCCESS", "OK");
-        }
-        logger.info("---------------------->回调成功-FAIL");
-        return  payService.getPayOutMessage("FAIL", "失败");
-    }
+	@Override
+	public PayOutMessage handle(WxPayMessage payMessage, Map<String, Object> context, PayService payService)
+			throws PayErrorException {
+		logger.info("---------------------->wx-回调成功-start");
+		if (null != payMessage)
+			logger.info("payMessage------" + JSON.toJSONString(payMessage));
+		if (null != payMessage.getPayMessage())
+			logger.info("payMessage.getPayMessage()------" + JSON.toJSONString(payMessage.getPayMessage()));
+		if (null != context)
+			logger.info("context------" + JSON.toJSONString(context));
+		// 交易状态
+		if ("SUCCESS".equals(payMessage.getPayMessage().get("result_code"))) {
+			///// 这里进行成功的处理
+			logger.info("---------------------->wx-回调成功-SUCCESS");
+			return payService.getPayOutMessage("SUCCESS", "OK");
+		}
+		logger.info("---------------------->wx-回调成功-FAIL");
+		return payService.getPayOutMessage("FAIL", "失败");
+	}
 }

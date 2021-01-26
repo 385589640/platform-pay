@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dy.platform.pay.dto.PayOrderDTO;
-import com.dy.platform.pay.service.WxPayInfoService;
+import com.dy.platform.pay.service.AliPayInfoService;
 import com.egzosn.pay.common.bean.PayOrder;
 
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/wxPay")
+@RequestMapping("/aliPay")
 @Slf4j
-public class WxPayController {
+public class AliPayController {
 
 	@Autowired
-	private WxPayInfoService wxPayInfoService;
+	private AliPayInfoService aliPayInfoService;
 
 	/**
 	 * 获取支付预订单信息
@@ -34,7 +34,7 @@ public class WxPayController {
 	 */
 	@PostMapping("payOrder")
 	public ResponseEntity<Map<String, Object>> payOrder(PayOrderDTO payOrderDTO) {
-		return ResponseEntity.ok(wxPayInfoService.payOrder(payOrderDTO));
+		return ResponseEntity.ok(aliPayInfoService.payOrder(payOrderDTO));
 	}
 
 	/**
@@ -45,8 +45,8 @@ public class WxPayController {
 	 * @throws IOException IOException
 	 */
 	@PostMapping(value = "toQrPay.jpg", produces = "image/jpeg;charset=UTF-8")
-	public byte[] toWxQrPay(@RequestBody PayOrder order) throws IOException {
-		return wxPayInfoService.toWxQrPay(order);
+	public byte[] toAliQrPay(@RequestBody PayOrder order) throws IOException {
+		return aliPayInfoService.toAliQrPay(order);
 	}
 	
 	/**
@@ -54,15 +54,15 @@ public class WxPayController {
 	 * 
 	 * @throws IOException IOException
 	 */
-	@PostMapping(value = "getWxQrPay")
-	public String getWxQrPay(@RequestBody PayOrder order) throws IOException {
-		return wxPayInfoService.getWxQrPay(order);
+	@PostMapping(value = "aliToPay")
+	public String aliToPay(@RequestBody PayOrder order) throws IOException {
+		return aliPayInfoService.aliToPay(order);
 	}
 	
 	@PostMapping("payNotify")
 	public String payNotify(HttpServletRequest request) {
 		try {
-			return wxPayInfoService.payNotify(request);
+			return aliPayInfoService.payNotify(request);
 		} catch (Exception e) {
 			log.info(e.getMessage());
 			return null;
