@@ -59,7 +59,7 @@ public class WxPayController {
 		return wxPayInfoService.getWxQrPay(order);
 	}
 	
-	@GetMapping("payNotify")
+	@PostMapping("payNotify")
 	public String payNotify(HttpServletRequest request) {
 		try {
 			return wxPayInfoService.payNotify(request);

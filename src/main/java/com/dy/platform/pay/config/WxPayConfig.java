@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,9 +24,12 @@ public class WxPayConfig {
 
 	@Resource
 	private AutowireCapableBeanFactory spring;
+	
+	@Value("${wxpay.keyStore}")
+	private String keyStore;
 
 //    private static String KEYSTORE = "/1601009655_20200821_cert/apiclient_cert.p12";
-	private static String KEYSTORE = "F:\\cert/apiclient_cert.p12";
+//	private static String KEYSTORE = "F:\\cert/apiclient_cert.p12";
 	private static String STORE_PASSWORD = "1601009655";
 
 	@PostConstruct
@@ -73,7 +77,7 @@ public class WxPayConfig {
 		// TODO 这里也支持输入流的入参。
 		// httpConfigStorage.setKeystore(this.getClass()..getResourceAsStream("/证书文件"));
 		// 设置ssl证书路径 跟着setCertStoreType 进行对应
-		httpConfigStorage.setKeystore(KEYSTORE);// 证书文件流，证书字符串信息或证书绝对地址
+		httpConfigStorage.setKeystore(keyStore);// 证书文件流，证书字符串信息或证书绝对地址
 		// 设置ssl证书对应的密码
 		httpConfigStorage.setStorePassword(STORE_PASSWORD);// 证书对应的密码
 		// 设置ssl证书对应的存储方式
