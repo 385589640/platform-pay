@@ -1,18 +1,19 @@
 package com.dy.platform.pay.controller;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dy.platform.pay.dto.PayOrderDTO;
 import com.dy.platform.pay.service.WxPayInfoService;
+import com.egzosn.pay.common.bean.PayOrder;
 
 @RestController
 @RequestMapping("/pay")
@@ -38,9 +39,9 @@ public class WxPayController {
 	 * @return 二维码图像
 	 * @throws IOException IOException
 	 */
-	@RequestMapping(value = "toQrPay.jpg", produces = "image/jpeg;charset=UTF-8")
-	public byte[] toWxQrPay(BigDecimal price) throws IOException {
-		return wxPayInfoService.toWxQrPay(price);
+	@PostMapping(value = "toQrPay.jpg", produces = "image/jpeg;charset=UTF-8")
+	public byte[] toWxQrPay(@RequestBody PayOrder order) throws IOException {
+		return wxPayInfoService.toWxQrPay(order);
 	}
 	
 	/**
@@ -50,9 +51,9 @@ public class WxPayController {
 	 * @return 二维码图像
 	 * @throws IOException IOException
 	 */
-	@RequestMapping(value = "getWxQrPay", produces = "image/jpeg;charset=UTF-8")
-	public String getWxQrPay(BigDecimal price) throws IOException {
-		return wxPayInfoService.getWxQrPay(price);
+	@PostMapping(value = "getWxQrPay")
+	public String getWxQrPay(@RequestBody PayOrder order) throws IOException {
+		return wxPayInfoService.getWxQrPay(order);
 	}
 	
 	@GetMapping("test")
