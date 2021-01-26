@@ -3,6 +3,8 @@ package com.dy.platform.pay.controller;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +17,11 @@ import com.dy.platform.pay.dto.PayOrderDTO;
 import com.dy.platform.pay.service.WxPayInfoService;
 import com.egzosn.pay.common.bean.PayOrder;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/pay")
+@Slf4j
 public class WxPayController {
 
 	@Autowired
@@ -45,15 +50,23 @@ public class WxPayController {
 	}
 	
 	/**
-	 * 获取二维码图像 二维码支付
+	 * 获取二维码连接 二维码支付
 	 * 
-	 * @param price 金额
-	 * @return 二维码图像
 	 * @throws IOException IOException
 	 */
 	@PostMapping(value = "getWxQrPay")
 	public String getWxQrPay(@RequestBody PayOrder order) throws IOException {
 		return wxPayInfoService.getWxQrPay(order);
+	}
+	
+	@GetMapping("payNotify")
+	public String payNotify(HttpServletRequest request) {
+		try {
+			return wxPayInfoService.payNotify(request);
+		} catch (Exception e) {
+			log.info(e.getMessage());
+			return null;
+		}
 	}
 	
 	@GetMapping("test")
