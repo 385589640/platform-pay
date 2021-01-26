@@ -57,7 +57,7 @@ public class WxPayInfoServiceImpl implements WxPayInfoService {
 	@Override
 	public String payNotify(HttpServletRequest request) throws IOException {
 		if(null != request.getParameterMap())
-			log.info(JSON.toJSONString("payNotify------request.getParameterMap()------" + request.getParameterMap()));
+			log.info("payNotify------request.getParameterMap()------" + JSON.toJSONString(request.getParameterMap()));
 		String message = wxPayService.payBack(request.getParameterMap(), request.getInputStream()).toMessage();
 		log.info("payNotify------" + message);
 		return message;
