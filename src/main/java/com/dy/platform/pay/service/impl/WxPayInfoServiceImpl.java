@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSON;
 import com.dy.platform.pay.dto.PayOrderDTO;
 import com.dy.platform.pay.service.WxPayInfoService;
 import com.egzosn.pay.common.bean.PayOrder;
+import com.egzosn.pay.common.bean.RefundOrder;
 import com.egzosn.pay.wx.api.WxPayService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,16 @@ public class WxPayInfoServiceImpl implements WxPayInfoService {
 	public Map<String, Object> payOrder(PayOrderDTO payOrderDTO) {
 		return wxPayService.orderInfo(payOrderDTO);
 	}
+	
+	@Override
+	public Map<String, Object> payQuery(String transactionId, String outTradeNo) {
+		return wxPayService.query(transactionId, outTradeNo);
+	}
+	
+	@Override
+	public Map<String, Object> appPay(PayOrder order) {
+		return wxPayService.app(order);
+	}
 
 	@Override
 	public byte[] toWxQrPay(PayOrder order) throws IOException {
@@ -43,7 +54,6 @@ public class WxPayInfoServiceImpl implements WxPayInfoService {
 //				System.currentTimeMillis() + "", WxTransactionType.NATIVE);
 		BufferedImage bufferedImage = wxPayService.genQrPay(order);
 		ImageIO.write(bufferedImage,"JPEG", baos);
-//		String wxUrl = wxPayService.getQrPay(order);
 		return baos.toByteArray();
 	}
 
@@ -61,6 +71,22 @@ public class WxPayInfoServiceImpl implements WxPayInfoService {
 		String message = wxPayService.payBack(request.getParameterMap(), request.getInputStream()).toMessage();
 		log.info("payNotify------" + message);
 		return message;
+	}
+
+	@Override
+	public Map<String, Object> payRefund(RefundOrder refundOrder) {
+		return wxPayService.refund(refundOrder);
+	}
+
+	@Override
+	public Map<String, Object> wxRefundQueryInfo(RefundOrder order) {
+		return wxPayService.refundquery(order);
+	}
+
+	@Override
+	public String refundNotify(HttpServletRequest request) {
+		
+		return null;
 	}
 
 }
