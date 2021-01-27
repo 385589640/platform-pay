@@ -71,7 +71,7 @@ public class WxPayController {
 	}
 	
 	@ApiOperation("支付回调接口")
-	@PostMapping("payNotify")
+	@PostMapping("wxPayNotify")
 	public String payNotify(HttpServletRequest request) {
 		try {
 			return wxPayInfoService.payNotify(request);

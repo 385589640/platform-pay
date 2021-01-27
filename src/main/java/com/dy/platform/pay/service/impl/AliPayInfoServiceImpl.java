@@ -16,6 +16,7 @@ import com.egzosn.pay.ali.api.AliPayConfigStorage;
 import com.egzosn.pay.ali.api.AliPayService;
 import com.egzosn.pay.ali.bean.AliTransactionType;
 import com.egzosn.pay.common.bean.PayOrder;
+import com.egzosn.pay.common.bean.RefundOrder;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +33,17 @@ public class AliPayInfoServiceImpl implements AliPayInfoService {
 	@Override
 	public Map<String, Object> payOrder(PayOrderDTO payOrderDTO) {
 		return aliPayService.orderInfo(payOrderDTO);
+	}
+	
+	@Override
+	public Map<String, Object> payQuery(String tradeNo, String outTradeNo) {
+		return aliPayService.query(tradeNo, outTradeNo);
+	}
+	
+	@Override
+	public Map<String, Object> appPay(PayOrder order) {
+		order.setTransactionType(AliTransactionType.APP);
+		return aliPayService.app(order);
 	}
 
 	@Override
@@ -52,6 +64,21 @@ public class AliPayInfoServiceImpl implements AliPayInfoService {
 		String message = aliPayService.payBack(request.getParameterMap(), request.getInputStream()).toMessage();
 		log.info("payNotify------" + message);
 		return message;
+	}
+
+	@Override
+	public Map<String, Object> payRefund(RefundOrder refundOrder) {
+		return aliPayService.refund(refundOrder);
+	}
+
+	@Override
+	public Map<String, Object> aliRefundQueryInfo(RefundOrder order) {
+		return aliPayService.refundquery(order);
+	}
+
+	@Override
+	public Map<String, Object> tradeClose(String tradeNo, String outTradeNo) {
+		return aliPayService.close(tradeNo, outTradeNo);
 	}
 
 }
