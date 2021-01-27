@@ -12,8 +12,6 @@ public interface AliPayInfoService {
 
 	Map<String, Object> payOrder(PayOrderDTO payOrderDTO);
 
-	byte[] toAliQrPay(PayOrder order) throws IOException;
-
 	String aliToPay(PayOrder order);
 
 	String payNotify(HttpServletRequest request) throws IOException;
