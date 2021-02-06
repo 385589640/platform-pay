@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/unionPay")
-@Api(tags = "微信支付管理")
+@Api(tags = "银联支付管理")
 @Slf4j
 public class UnionPayController {
 
