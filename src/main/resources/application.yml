@@ -20,7 +20,7 @@ spring:
 mybatis:
    configuration:
       log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-wxpay: 
-   keyStore: /usr/local/platform-pay/apiclient_cert.p12
 #wxpay: 
-#   keyStore: F:\\cert/apiclient_cert.p12
+#   keyStore: /usr/local/platform-pay/apiclient_cert.p12
+wxpay: 
+   keyStore: F:\\cert/apiclient_cert.p12

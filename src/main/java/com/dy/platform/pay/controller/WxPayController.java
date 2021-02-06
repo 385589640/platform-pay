@@ -81,6 +81,17 @@ public class WxPayController {
 		}
 	}
 	
+	@ApiOperation("支付回调接口")
+	@PostMapping("wxPayNotifyV2")
+	public String payNotifyV2(HttpServletRequest request) {
+		try {
+			return wxPayInfoService.payNotifyV2(request);
+		} catch (Exception e) {
+			log.info(e.getMessage());
+			return null;
+		}
+	}
+	
 	@ApiOperation(value = "微信支付退款申请", notes = "微信支付退款申请")
     @PostMapping(value = "/payRefund")
     public Map<String, Object> payRefund(@RequestBody RefundOrder refundOrder) {

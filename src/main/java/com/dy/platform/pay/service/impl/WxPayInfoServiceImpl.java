@@ -72,6 +72,23 @@ public class WxPayInfoServiceImpl implements WxPayInfoService {
 		log.info("payNotify------" + message);
 		return message;
 	}
+	
+	@Override
+	public String payNotifyV2(HttpServletRequest request) throws IOException {
+		//获取支付方返回的对应参数
+        Map<String, Object> params = wxPayService.getParameter2Map(request.getParameterMap(), request.getInputStream());
+        if (null == params){
+            return wxPayService.getPayOutMessage("fail","失败").toMessage();
+        }
+
+        //校验
+        if (wxPayService.verify(params)){
+            //这里处理业务逻辑
+            return  wxPayService.getPayOutMessage("success", "成功").toMessage();
+        }
+
+        return wxPayService.getPayOutMessage("fail","失败").toMessage();
+	}
 
 	@Override
 	public Map<String, Object> payRefund(RefundOrder refundOrder) {
@@ -85,7 +102,9 @@ public class WxPayInfoServiceImpl implements WxPayInfoService {
 
 	@Override
 	public String refundNotify(HttpServletRequest request) {
-		
+		if(null != request.getParameterMap())
+			log.info("rePayNotify------request.getParameterMap()------" + JSON.toJSONString(request.getParameterMap()));
+		log.info("退款回调通知------------------------------------------------------------------------------------");
 		return null;
 	}
 

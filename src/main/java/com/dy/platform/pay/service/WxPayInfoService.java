@@ -29,4 +29,6 @@ public interface WxPayInfoService {
 
 	String refundNotify(HttpServletRequest request);
 
+	String payNotifyV2(HttpServletRequest request) throws IOException;
+
 }
