@@ -14,7 +14,6 @@ import com.dy.platform.quartz.entity.QuartzBean;
  * @author: lsd
  * @create: 2020-07-21 17:00
  **/
-@Service
 public interface QuartzJobService {
 
 	/**
