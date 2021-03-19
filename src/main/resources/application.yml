@@ -49,3 +49,7 @@ quartz:
             threadsInheritContextClassLoaderOfInitializingThread: true
    #数据库方式
    job-store-type: jdbc
+   # 程序结束时会等待quartz相关的内容结束
+   wait-for-jobs-to-complete-on-shutdown: true
+   # QuartzScheduler启动时更新己存在的Job,这样就不用每次修改targetObject后删除qrtz_job_details表对应记录
+   overwrite-existing-jobs: true

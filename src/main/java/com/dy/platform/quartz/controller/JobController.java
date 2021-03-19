@@ -34,15 +34,15 @@ public class JobController {
 	@GetMapping("startSimpleJob")
 	public String startSimpleJob() throws SchedulerException, ClassNotFoundException, ParseException {
 		QuartzBean quartzBean = new QuartzBean();
-		quartzBean.setJobClass("com.quartz.demo.job.MyTask");
+		quartzBean.setJobClass("com.dy.platform.quartz.conf.MyTask");
 		quartzBean.setJobName("job1");
 		JobDataMap map = new JobDataMap();
 		map.put("userId", "123456");
 		quartzBean.setJobDataMap(map);
 		Date now = new Date();
 		quartzBean.setStartTime(DateUtils.addSeconds(now, 10));
-		quartzBean.setInterval(10);
-		quartzBean.setEndTime(DateUtils.addMinutes(now, 1));
+		quartzBean.setInterval(1);
+		quartzBean.setEndTime(DateUtils.addMinutes(now, 10));
 		try {
 			quartzJobService.createScheduleJobSimple(quartzBean);
 		} catch (Exception e) {
