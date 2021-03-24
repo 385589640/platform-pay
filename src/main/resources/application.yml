@@ -1,16 +1,65 @@
 spring:
-  application:
-    port: 8080
+   application:
+      port: 8080
   #数据源配置
-  datasource:
+   datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
 #    url: jdbc:mysql://rm-2ze32abbq3m7r48edbo.mysql.rds.aliyuncs.com:3306/daas_db?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&allowMultiQueries=true&allowPublicKeyRetrieval=true
-    driver-class-name: com.mysql.jdbc.Driver
 #    username: cxdbroot
 #    password: Cxbid@2020
-    url: jdbc:mysql://101.201.148.68:3306/bidtest20200924?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
-    username: root
-    password: Li769123...
-    type: com.alibaba.druid.pool.DruidDataSource
+#    url: jdbc:mysql://101.201.148.68:3306/bidtest20200924?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+#    username: root
+#    password: Li769123...
+      type: com.alibaba.druid.pool.DruidDataSource
+      dynamic: 
+         primary: master #设置默认的数据源或者数据源组,默认值即为master
+         datasource:
+            master:
+               url: jdbc:mysql://101.201.148.68:3306/bidtest20200924?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+               driver-class-name: com.mysql.cj.jdbc.Driver
+               username: root
+               password: Li769123...
+            quartz:
+               url: jdbc:mysql://101.201.148.68:3306/bidtest20200924?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+               driver-class-name: com.mysql.cj.jdbc.Driver
+               username: root
+               password: Li769123...
+   quartz:
+   #quartz相关属性配置
+      properties:
+         org:
+           quartz:
+             dataSource: 
+               quartzDataSource: 
+                 URL: jdbc:mysql://101.201.148.68:3306/bidtest20200924?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+                 driver: com.mysql.cj.jdbc.Driver
+                 user: root
+                 password: Li769123...
+             scheduler:
+               instanceName: clusteredScheduler #调度器的实例名
+               instanceId: AUTO #调度器编号自动生成
+             jobStore:
+               class: org.quartz.impl.jdbcjobstore.JobStoreTX
+               driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+               tablePrefix: qrtz_ #数据库表名前缀
+               isClustered: true #开启分布式部署
+               clusterCheckinInterval: 10000 #分布式节点有效性检查时间间隔,单位:秒
+               useProperties: false
+               dataSource: quartzDataSource
+             threadPool:
+               class: org.quartz.simpl.SimpleThreadPool #自带的线程池实现类
+               threadCount: 10 #开启10个线程
+               threadPriority: 5 #工作者线程的优先级
+               threadsInheritContextClassLoaderOfInitializingThread: true
+      jdbc: 
+         # 初始化Quartz表结构,项目第一次启动配置程always,然后改成never 否则已生成的job会被初始化掉
+         initialize-schema: always
+      #数据库方式
+      job-store-type: jdbc
+      # 程序结束时会等待quartz相关的内容结束
+      wait-for-jobs-to-complete-on-shutdown: true
+      # QuartzScheduler启动时更新己存在的Job,这样就不用每次修改targetObject后删除qrtz_job_details表对应记录
+      overwrite-existing-jobs: true
 #    hikari:
 #      minimum-idle: 5
 #      maximum-pool-size: 20
@@ -27,29 +76,3 @@ mybatis:
 #   keyStore: /usr/local/platform-pay/apiclient_cert.p12
 wxpay: 
    keyStore: F:\\cert/apiclient_cert.p12
-quartz:
-   #quartz相关属性配置
-   properties:
-      org:
-        quartz:
-          scheduler:
-            instanceName: clusteredScheduler #调度器的实例名
-            instanceId: AUTO #调度器编号自动生成
-          jobStore:
-            class: org.quartz.impl.jdbcjobstore.JobStoreTX
-            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-            tablePrefix: qrtz_ #数据库表名前缀
-            isClustered: true #开启分布式部署
-            clusterCheckinInterval: 10000 #分布式节点有效性检查时间间隔,单位:秒
-            useProperties: false
-          threadPool:
-            class: org.quartz.simpl.SimpleThreadPool #自带的线程池实现类
-            threadCount: 10 #开启10个线程
-            threadPriority: 5 #工作者线程的优先级
-            threadsInheritContextClassLoaderOfInitializingThread: true
-   #数据库方式
-   job-store-type: jdbc
-   # 程序结束时会等待quartz相关的内容结束
-   wait-for-jobs-to-complete-on-shutdown: true
-   # QuartzScheduler启动时更新己存在的Job,这样就不用每次修改targetObject后删除qrtz_job_details表对应记录
-   overwrite-existing-jobs: true
