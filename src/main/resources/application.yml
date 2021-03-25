@@ -1,5 +1,10 @@
+server: 
+   port: 8080
+   tomcat: 
+      uri-encoding: UTF-8 #以Tomcat为web容器时的字符编码
 spring:
    application:
+      name: platform
       port: 8080
   #数据源配置
    datasource:
@@ -19,11 +24,11 @@ spring:
                driver-class-name: com.mysql.cj.jdbc.Driver
                username: root
                password: Li769123...
-            quartz:
-               url: jdbc:mysql://101.201.148.68:3306/bidtest20200924?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
-               driver-class-name: com.mysql.cj.jdbc.Driver
-               username: root
-               password: Li769123...
+#            quartz:
+#               url: jdbc:mysql://101.201.148.68:3306/bidtest20200924?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+#               driver-class-name: com.mysql.cj.jdbc.Driver
+#               username: root
+#               password: Li769123...
    quartz:
    #quartz相关属性配置
       properties:
@@ -44,7 +49,7 @@ spring:
                tablePrefix: qrtz_ #数据库表名前缀
                isClustered: true #开启分布式部署
                clusterCheckinInterval: 10000 #分布式节点有效性检查时间间隔,单位:秒
-               useProperties: false
+               useProperties: true
                dataSource: quartzDataSource
              threadPool:
                class: org.quartz.simpl.SimpleThreadPool #自带的线程池实现类
@@ -53,7 +58,7 @@ spring:
                threadsInheritContextClassLoaderOfInitializingThread: true
       jdbc: 
          # 初始化Quartz表结构,项目第一次启动配置程always,然后改成never 否则已生成的job会被初始化掉
-         initialize-schema: always
+         initialize-schema: never
       #数据库方式
       job-store-type: jdbc
       # 程序结束时会等待quartz相关的内容结束
