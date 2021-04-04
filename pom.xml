@@ -10,7 +10,7 @@
 	</parent>
 	
 	<groupId>com.dy.platform.pay</groupId>
-	<artifactId>platform-pay</artifactId>
+	<artifactId>platform-pay-test</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
