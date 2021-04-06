@@ -40,9 +40,16 @@ spring:
                  driver: com.mysql.cj.jdbc.Driver
                  user: root
                  password: Li769123...
+                 maxConnections: 5
+                 validationQuery: select 0
+                 #connectionProvider:
+                    #class: com.dy.platform.quartz.conf.DruidConnectionProvider
              scheduler:
                instanceName: clusteredScheduler #调度器的实例名
                instanceId: AUTO #调度器编号自动生成
+               skipUpdateCheck: true
+               jobFactory:
+                  class: org.quartz.simpl.SimpleJobFactory
              jobStore:
                class: org.quartz.impl.jdbcjobstore.JobStoreTX
                driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
@@ -58,13 +65,13 @@ spring:
                threadsInheritContextClassLoaderOfInitializingThread: true
       jdbc: 
          # 初始化Quartz表结构,项目第一次启动配置程always,然后改成never 否则已生成的job会被初始化掉
-         initialize-schema: never
+         initializeSchema: never
       #数据库方式
-      job-store-type: jdbc
+      jobStoreType: jdbc
       # 程序结束时会等待quartz相关的内容结束
-      wait-for-jobs-to-complete-on-shutdown: true
+      waitForJobsToCompleteOnShutdown: true
       # QuartzScheduler启动时更新己存在的Job,这样就不用每次修改targetObject后删除qrtz_job_details表对应记录
-      overwrite-existing-jobs: true
+      overwriteExistingJobs: true
 #    hikari:
 #      minimum-idle: 5
 #      maximum-pool-size: 20
